@@ -1,0 +1,16 @@
+.jumbotron {
+    height: 40px
+}
+
+#title.display-4 {
+    text-align: center;
+    margin-top: -40px;
+}
+
+aside {
+    background-color: rgb(180, 173, 173);
+}
+
+body {
+    height: 500px;
+}
