@@ -11,6 +11,23 @@ aside {
     background-color: rgb(180, 173, 173);
 }
 
-body {
-    height: 500px;
+.container {
+    background-color: lightgrey;
+    height: 400px;
+}
+
+.col-8 {
+    background-color: lightblue;
+}
+
+.col-lg-4{
+    background-color: lightgreen;
+}
+
+.row {
+    background-color: lightsalmon
+}
+
+#currentWeather {
+    border-style: solid;
 }
