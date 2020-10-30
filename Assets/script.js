@@ -1,3 +1,4 @@
+var m = moment().format("LLL");
 const APIKey = "1a782e7aafcfa4684a2e6ac3c8810cba";
 var storedCities = [];
 
@@ -16,7 +17,7 @@ $("button").click(function () {
       success: function (cityJSON) {
           console.log(cityJSON);
           var historyItem = JSON.parse(localStorage.getItem(localStorage.key("userInput")))
-          $("#cityNameDisplay").append(cityJSON.name)
+          $("#cityNameDisplay").append(cityJSON.name + " - " +  m)
           $("#temperatureDisplay").append("Temperature: " + cityJSON.main.temp + " Degrees")
           $("#humidityDisplay").append("Humidity: " + cityJSON.main.humidity + "%")
           $("#windSpeedDisplay").append("Wind Speed: " + cityJSON.wind.speed + " Miles Per Hour")
