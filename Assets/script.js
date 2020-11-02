@@ -161,7 +161,7 @@ $(".searchItem").click(function () {
 
 function getUV(lat, lon) {
     $.ajax({
-        url: "http://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&appid=" + APIKey,
+        url: "https://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&appid=" + APIKey,
         method: "GET",
         success: function (uvJSON) {
             $("#cityUV").append("UV Index: " + uvJSON.value);
