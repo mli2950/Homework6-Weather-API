@@ -42,7 +42,7 @@ enter.addEventListener("keyup", function () {
             
                     $("#history").append(searchItem);
                     getUV(cityJSON.coord.lat, cityJSON.coord.lon)
-                    fiveDay(document.getElementById("cityInput").value)
+                    fiveDay(cityJSON.coord.lat, cityJSON.coord.lon)
                 }
         
             }
@@ -89,7 +89,7 @@ $("button").click(function () {
             
                 $("#history").append(searchItem);
                 getUV(cityJSON.coord.lat, cityJSON.coord.lon)
-                fiveDay(document.getElementById("cityInput").value)
+                fiveDay(cityJSON.coord.lat, cityJSON.coord.lon)
             }
         
         }
@@ -135,6 +135,7 @@ $(".searchItem").click(function () {
             $("#windSpeedDisplay").append("Wind Speed: " + cityJSON.wind.speed + " Miles Per Hour")
             
             getUV(cityJSON.coord.lat, cityJSON.coord.lon)
+            fiveDay(cityJSON.coord.lat, cityJSON.coord.lon)
         }
     })
 })
@@ -144,27 +145,25 @@ function getUV(lat, lon) {
         url: "http://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&appid=" + APIKey,
         method: "GET",
         success: function (uvJSON) {
-            // console.log("success", uvJSON)
             $("#cityUV").append("UV Index: " + uvJSON.value);
         }
     })
 }
 
-function fiveDay(x) {
+function fiveDay(lat, lon) {
     $.ajax({
-        url: "http://api.openweathermap.org/data/2.5/forecast?q=" + x + "&units=imperial&appid=" + APIKey,
+        url: "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=minutely,current,hourly,alerts&units=imperial&appid=" + APIKey,
         method: "GET",
         success: function (fiveForecast) {
-            console.log("five success", fiveForecast)
-            console.log(fiveForecast.list[3].dt_txt, fiveForecast.list[3].main.temp, fiveForecast.list[3].main.humidity)
+            
+            for (var i = 0; i < 5; i++) {
+                console.log(fiveForecast.daily[i])
+                console.log(fiveForecast.daily[i].feels_like.day)
+                console.log(fiveForecast.daily[i].humidity)
+            }
 
-            console.log(fiveForecast.list[11].dt_txt, fiveForecast.list[11].main.temp, fiveForecast.list[11].main.humidity)
 
-            console.log(fiveForecast.list[19].dt_txt, fiveForecast.list[19].main.temp, fiveForecast.list[19].main.humidity)
-
-            console.log(fiveForecast.list[27].dt_txt, fiveForecast.list[27].main.temp, fiveForecast.list[27].main.humidity)
-
-            console.log(fiveForecast.list[35].dt_txt, fiveForecast.list[35].main.temp, fiveForecast.list[35].main.humidity)
+            
         }
     })
 
