@@ -8,12 +8,12 @@
 }
 
 aside {
-    background-color: #E9ECEF;
+    background-color: #a0a1a1;
 }
 
 .container {
-    background-color: #E9ECEF;
-    height: 400px;
+    background-color: #a0a1a1;
+    
 }
 
 /* .col-8 {
@@ -30,4 +30,8 @@ aside {
 
 #currentWeather {
     border-radius: 1px;
+}
+
+.jumbotron {
+    background-color: #a0a1a1;
 }

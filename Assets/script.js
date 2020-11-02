@@ -22,8 +22,15 @@ enter.addEventListener("keyup", function () {
             method: "GET",
             success: function (cityJSON) {
                 console.log(cityJSON);
+
+                var getfivedayIcon = cityJSON.weather[0].icon;
+                      fivedayIcon =
+                        "http://openweathermap.org/img/wn/" +
+                        getfivedayIcon +
+                    "@2x.png";
+                
                 var historyItem = JSON.parse(localStorage.getItem(localStorage.key("userInput")))
-                $("#cityNameDisplay").append(cityJSON.name + " - " + m)
+                $("#cityNameDisplay").append(cityJSON.name + " - " + m + "<img src=" + fivedayIcon + ">")
                 $("#temperatureDisplay").append("Temperature: " + cityJSON.main.temp + " &deg;F")
                 $("#humidityDisplay").append("Humidity: " + cityJSON.main.humidity + "%")
                 $("#windSpeedDisplay").append("Wind Speed: " + cityJSON.wind.speed + " Miles Per Hour")
@@ -63,20 +70,31 @@ $("button").click(function () {
     var requestURL =
         "https://api.openweathermap.org/data/2.5/weather?q=" +
         userInput + "&units=imperial&APPID=" + APIKey;
+    
+        
 
     $.ajax({
         url: requestURL,
         method: "GET",
         success: function (cityJSON) {
             console.log(cityJSON);
+            
+            var getfivedayIcon = cityJSON.weather[0].icon;
+                      fivedayIcon =
+                        "http://openweathermap.org/img/wn/" +
+                        getfivedayIcon +
+                "@2x.png";
+            
             var historyItem = JSON.parse(localStorage.getItem(localStorage.key("userInput")))
-            $("#cityNameDisplay").append(cityJSON.name + " - " + m)
+            $("#cityNameDisplay").append(cityJSON.name + " - " + m + "<img src=" + fivedayIcon + ">")
             $("#temperatureDisplay").append("Temperature: " + cityJSON.main.temp + " &deg;F")
             $("#humidityDisplay").append("Humidity: " + cityJSON.main.humidity + "%")
             $("#windSpeedDisplay").append("Wind Speed: " + cityJSON.wind.speed + " Miles Per Hour")
             var userInput = $("#cityInput").val()
             storedCities.push(userInput)
             localStorage.setItem("userInput", JSON.stringify(storedCities))
+            
+            
           
             if (historyItem !== null) {
                 var searchItem = document.createElement("input");
@@ -91,6 +109,7 @@ $("button").click(function () {
                 getUV(cityJSON.coord.lat, cityJSON.coord.lon)
                 fiveDay(cityJSON.coord.lat, cityJSON.coord.lon)
             }
+            
         
         }
     }
