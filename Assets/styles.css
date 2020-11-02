@@ -35,3 +35,25 @@ aside {
 .jumbotron {
     background-color: #a0a1a1;
 }
+
+.btn {
+    background-color: #007BFF;
+    color: white;
+}
+
+.col-lg-4 {
+    padding-bottom: -20px;
+}
+
+#uvCol {
+    display: inline-flex;
+    padding-bottom: 20px;
+   
+    
+}
+
+span {
+    border-radius: 5px;
+    margin-left: 5px;
+    padding: 10px;
+}
