@@ -24,7 +24,7 @@ enter.addEventListener("keyup", function () {
                 console.log(cityJSON);
                 var historyItem = JSON.parse(localStorage.getItem(localStorage.key("userInput")))
                 $("#cityNameDisplay").append(cityJSON.name + " - " + m)
-                $("#temperatureDisplay").append("Temperature: " + cityJSON.main.temp + " Degrees")
+                $("#temperatureDisplay").append("Temperature: " + cityJSON.main.temp + " &deg;F")
                 $("#humidityDisplay").append("Humidity: " + cityJSON.main.humidity + "%")
                 $("#windSpeedDisplay").append("Wind Speed: " + cityJSON.wind.speed + " Miles Per Hour")
                 var userInput = $("#cityInput").val()
@@ -71,7 +71,7 @@ $("button").click(function () {
             console.log(cityJSON);
             var historyItem = JSON.parse(localStorage.getItem(localStorage.key("userInput")))
             $("#cityNameDisplay").append(cityJSON.name + " - " + m)
-            $("#temperatureDisplay").append("Temperature: " + cityJSON.main.temp + " Degrees")
+            $("#temperatureDisplay").append("Temperature: " + cityJSON.main.temp + " &deg;F")
             $("#humidityDisplay").append("Humidity: " + cityJSON.main.humidity + "%")
             $("#windSpeedDisplay").append("Wind Speed: " + cityJSON.wind.speed + " Miles Per Hour")
             var userInput = $("#cityInput").val()
@@ -121,13 +121,13 @@ $(".searchItem").click(function () {
     $("h3").empty();
     var historyInput = this.value
     
-    console.log(historyInput)
+    
         $.ajax({
         url: "https://api.openweathermap.org/data/2.5/weather?q=" +
         historyInput + "&units=imperial&APPID=" + APIKey,
         method: "GET",
         success: function (cityJSON) {
-            console.log(cityJSON);
+            
             
             $("#cityNameDisplay").append(cityJSON.name + " - " + m)
             $("#temperatureDisplay").append("Temperature: " + cityJSON.main.temp + " Degrees")
@@ -146,7 +146,7 @@ function getUV(lat, lon) {
         method: "GET",
         success: function (uvJSON) {
             $("#cityUV").append("UV Index: " + uvJSON.value);
-            console.log(uvJSON)
+            
         }
     })
 }
@@ -163,12 +163,19 @@ function fiveDay(lat, lon) {
         success: function (fiveForecast) {
             
             for (var i = 0; i < 6; i++) {
+                var getfivedayIcon = fiveForecast.daily[i].weather[0].icon;
+                      fivedayIcon =
+                        "http://openweathermap.org/img/wn/" +
+                        getfivedayIcon +
+                        "@2x.png";
                 var time = fiveForecast.daily[i].dt
                 var newTime = moment.unix(time).format("MM/DD/YYYY")
                 
                 $("#forecast" + [i]).append(newTime)
+                $("#forecast" + [i]).append("<img src=" + fivedayIcon + ">")
                 $("#forecast" + [i]).append("\nTemp: " + fiveForecast.daily[i].temp.day + " &deg;F")
                 $("#forecast" + [i]).append("\nHumidity: " + fiveForecast.daily[i].humidity + "%")
+                
             }
             
         }
