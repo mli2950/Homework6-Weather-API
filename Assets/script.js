@@ -146,23 +146,30 @@ function getUV(lat, lon) {
         method: "GET",
         success: function (uvJSON) {
             $("#cityUV").append("UV Index: " + uvJSON.value);
+            console.log(uvJSON)
         }
     })
 }
 
 function fiveDay(lat, lon) {
+    $("#forecast1").empty();
+    $("#forecast2").empty();
+    $("#forecast3").empty();
+    $("#forecast4").empty();
+    $("#forecast5").empty();
     $.ajax({
         url: "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=minutely,current,hourly,alerts&units=imperial&appid=" + APIKey,
         method: "GET",
         success: function (fiveForecast) {
             
-            for (var i = 0; i < 5; i++) {
-                console.log(fiveForecast.daily[i])
-                console.log(fiveForecast.daily[i].feels_like.day)
-                console.log(fiveForecast.daily[i].humidity)
+            for (var i = 0; i < 6; i++) {
+                var time = fiveForecast.daily[i].dt
+                var newTime = moment.unix(time).format("MM/DD/YYYY")
+                
+                $("#forecast" + [i]).append(newTime)
+                $("#forecast" + [i]).append("\nTemp: " + fiveForecast.daily[i].temp.day + " &deg;F")
+                $("#forecast" + [i]).append("\nHumidity: " + fiveForecast.daily[i].humidity + "%")
             }
-
-
             
         }
     })
