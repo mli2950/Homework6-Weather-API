@@ -1,3 +1,4 @@
+$(".forecast").hide();
 var m = moment().format("LLL");
 const APIKey = "1a782e7aafcfa4684a2e6ac3c8810cba";
 var storedCities = [];
@@ -72,7 +73,8 @@ enter.addEventListener("keyup", function () {
 // Click event listener for search button
 $("button").click(function () {
   $("p").empty();
-  $("h3").empty();
+    $("h3").empty();
+    $("span").empty();
   if (localStorage.getItem("userInput") !== null) {
     storedCities = JSON.parse(localStorage.getItem("userInput"));
   }
@@ -121,7 +123,8 @@ $("button").click(function () {
 
         $("#history").append(searchItem);
         getUV(cityJSON.coord.lat, cityJSON.coord.lon);
-        fiveDay(cityJSON.coord.lat, cityJSON.coord.lon);
+          fiveDay(cityJSON.coord.lat, cityJSON.coord.lon);
+
       }
     },
   });
@@ -195,18 +198,18 @@ function getUV(lat, lon) {
           $("#cityUV").append("UV Index: ")
           $("#uvNum").append(" " + uvJSON.value);
           if (uvJSON.value >= 0 && uvJSON.value <= 2) {
-              $("#uvNum").attr("style", "background-color:green")
+              $("#uvNum").attr("style", "background-color:green; color: white")
           } else if (uvJSON.value >= 2 && uvJSON.value <= 5) {
               $("#uvNum").attr("style", "background-color:orange")
           } else {
-              $("#uvNum").attr("style", "background-color:red")
+              $("#uvNum").attr("style", "background-color:red; color: white")
           }
     },
   });
 }
 
 function fiveDay(lat, lon) {
-
+    $(".forecast").show();
   $("#forecast1").empty();
   $("#forecast2").empty();
   $("#forecast3").empty();
