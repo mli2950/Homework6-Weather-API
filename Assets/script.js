@@ -184,7 +184,7 @@ function fiveDay(lat, lon) {
             for (var i = 0; i < 6; i++) {
                 var getfivedayIcon = fiveForecast.daily[i].weather[0].icon;
                       fivedayIcon =
-                        "http://openweathermap.org/img/wn/" +
+                        "https://openweathermap.org/img/wn/" +
                         getfivedayIcon +
                         "@2x.png";
                 var time = fiveForecast.daily[i].dt
