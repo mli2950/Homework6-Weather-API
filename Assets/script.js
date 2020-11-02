@@ -5,6 +5,9 @@ var storedCities = [];
 $("button").click(function () {
     $("p").empty();
     $("h3").empty();
+    if (localStorage.getItem("userInput") !== null) {
+        storedCities = JSON.parse(localStorage.getItem("userInput"));
+      }
 
     var userInput = document.getElementById("cityInput").value;
     var requestURL =
@@ -21,7 +24,6 @@ $("button").click(function () {
             $("#temperatureDisplay").append("Temperature: " + cityJSON.main.temp + " Degrees")
             $("#humidityDisplay").append("Humidity: " + cityJSON.main.humidity + "%")
             $("#windSpeedDisplay").append("Wind Speed: " + cityJSON.wind.speed + " Miles Per Hour")
-            $("#skiesDisplay").append("Skies are: " + cityJSON.weather[0].main)
             var userInput = $("#cityInput").val()
             storedCities.push(userInput)
             localStorage.setItem("userInput", JSON.stringify(storedCities))
@@ -30,12 +32,14 @@ $("button").click(function () {
                 var searchItem = document.createElement("input");
                 searchItem.setAttribute("type", "text");
                 searchItem.setAttribute("readonly", "true");
-                searchItem.setAttribute("class", "form-control d-block");
+                searchItem.setAttribute("class", "form-control d-block searchItem");
                 searchItem.setAttribute("id", "searchItem")
                 searchItem.setAttribute("value", storedCities[storedCities.length-1])
                 
             
                 $("#history").append(searchItem);
+                getUV(cityJSON.coord.lat, cityJSON.coord.lon)
+                fiveDay(document.getElementById("cityInput").value)
             }
         
         }
@@ -52,7 +56,7 @@ function showStorage() {
             var searchItem = document.createElement("input");
               searchItem.setAttribute("type", "text");
               searchItem.setAttribute("readonly", "true");
-              searchItem.setAttribute("class", "form-control d-block");
+              searchItem.setAttribute("class", "form-control d-block searchItem");
               searchItem.setAttribute("id", "searchItem");
               searchItem.setAttribute("value", historyItem[i])
               $("#history").append(searchItem);
@@ -62,7 +66,7 @@ function showStorage() {
 
 showStorage();
 
-$(".form-control.d-block").click(function () {
+$(".searchItem").click(function () {
     $("p").empty();
     $("h3").empty();
     var historyInput = this.value
@@ -79,8 +83,31 @@ $(".form-control.d-block").click(function () {
             $("#temperatureDisplay").append("Temperature: " + cityJSON.main.temp + " Degrees")
             $("#humidityDisplay").append("Humidity: " + cityJSON.main.humidity + "%")
             $("#windSpeedDisplay").append("Wind Speed: " + cityJSON.wind.speed + " Miles Per Hour")
-            $("#skiesDisplay").append("Skies are: " + cityJSON.weather[0].main)
             
+            getUV(cityJSON.coord.lat, cityJSON.coord.lon)
         }
     })
 })
+
+function getUV(lat, lon) {
+    $.ajax({
+        url: "http://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&appid=" + APIKey,
+        method: "GET",
+        success: function (uvJSON) {
+            // console.log("success", uvJSON)
+            $("#cityUV").append("UV Index: " + uvJSON.value);
+        }
+    })
+}
+
+function fiveDay(x) {
+    $.ajax({
+        url: "http://api.openweathermap.org/data/2.5/forecast?q=" + x + "&appid=" + APIKey,
+        method: "GET",
+        success: function (fiveForecast) {
+            console.log("five success", fiveForecast)
+            console.log(fiveForecast.main.list.main)
+        }
+    })
+
+}

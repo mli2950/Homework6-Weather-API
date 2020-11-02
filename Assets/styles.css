@@ -8,15 +8,15 @@
 }
 
 aside {
-    background-color: rgb(180, 173, 173);
+    background-color: #E9ECEF;
 }
 
 .container {
-    background-color: lightgrey;
+    background-color: #E9ECEF;
     height: 400px;
 }
 
-.col-8 {
+/* .col-8 {
     background-color: lightblue;
 }
 
@@ -26,7 +26,7 @@ aside {
 
 .row {
     background-color: lightsalmon
-}
+} */
 
 #currentWeather {
     border-style: solid;
