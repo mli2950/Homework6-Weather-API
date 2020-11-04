@@ -22,7 +22,7 @@ I also had to create one more API call for the weather icons, and correctly conc
 
 The following image shows the web application's appearance and functionality:
 
-![The weather app includes a search option, a list of cities, and a five-day forecast and current weather conditions for Denver.](\Assets\imgs\mli2950.github.io_Homework6-Weather-API_.png)
+![Home Page](Assets\imgs\mli2950.github.io_Homework6-Weather-API_.png)
 (.\Assets\imgs\mli2950.github.io_Homework6-Weather-API_ (1).png)
 
 
