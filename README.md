@@ -24,7 +24,7 @@ The following image shows the web application's appearance and functionality:
 
 ![Home Page](mli2950.github.io_Homework6-Weather-API_.png "Home Page")
 
-![Results page](Assets\imgs\mli2950.github.io_Homework6-Weather-API_ (1).png "Results Page")
+![Results page](mli2950.github.io_Homework6-Weather-API_ (1).png "Results Page")
 
 
 
