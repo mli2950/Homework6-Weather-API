@@ -59,7 +59,13 @@ enter.addEventListener("keyup", function () {
           searchItem.setAttribute(
             "value",
             storedCities[storedCities.length - 1]
-          );
+            );
+            searchItem.addEventListener("click", function (event) {
+                var historySearch = this.value
+            console.log(historySearch)
+            showHistory(historySearch)
+            })
+  
 
           $("#history").append(searchItem);
           getUV(cityJSON.coord.lat, cityJSON.coord.lon);
@@ -71,7 +77,62 @@ enter.addEventListener("keyup", function () {
 });
 
 // Click event listener for search button
-$("button").click(function () {
+$("button").click(getWeather())
+
+// showHistory function
+function showHistory(x) {
+    $("p").empty();
+    $("h3").empty();
+    $("span").empty();
+  if (localStorage.getItem("userInput") !== null) {
+    storedCities = JSON.parse(localStorage.getItem("userInput"));
+  }
+
+  var userInput = x;
+  var requestURL =
+    "https://api.openweathermap.org/data/2.5/weather?q=" +
+    userInput +
+    "&units=imperial&APPID=" +
+    APIKey;
+
+  $.ajax({
+    url: requestURL,
+    method: "GET",
+    success: function (cityJSON) {
+      console.log(cityJSON);
+
+      var getfivedayIcon = cityJSON.weather[0].icon;
+      fivedayIcon =
+        "http://openweathermap.org/img/wn/" + getfivedayIcon + "@2x.png";
+
+      var historyItem = JSON.parse(
+        localStorage.getItem(localStorage.key("userInput"))
+      );
+      $("#cityNameDisplay").append(
+        cityJSON.name + " - " + m + "<img src=" + fivedayIcon + ">"
+      );
+      $("#temperatureDisplay").append(
+        "Temperature: " + cityJSON.main.temp + " &deg;F"
+      );
+      $("#humidityDisplay").append("Humidity: " + cityJSON.main.humidity + "%");
+      $("#windSpeedDisplay").append(
+        "Wind Speed: " + cityJSON.wind.speed + " Miles Per Hour"
+      );
+      var userInput = $("#cityInput").val();
+      storedCities.push(userInput);
+      localStorage.setItem("userInput", JSON.stringify(storedCities));
+
+        $("#history").append(searchItem);
+        getUV(cityJSON.coord.lat, cityJSON.coord.lon);
+          fiveDay(cityJSON.coord.lat, cityJSON.coord.lon);
+    },
+  });
+
+}
+
+// getWeather function
+function getWeather(x) {
+
   $("p").empty();
     $("h3").empty();
     $("span").empty();
@@ -119,7 +180,12 @@ $("button").click(function () {
         searchItem.setAttribute("readonly", "true");
         searchItem.setAttribute("class", "form-control d-block searchItem");
         searchItem.setAttribute("id", "searchItem");
-        searchItem.setAttribute("value", storedCities[storedCities.length - 1]);
+          searchItem.setAttribute("value", storedCities[storedCities.length - 1]);
+          searchItem.addEventListener("click", function (event) {
+            var historySearch = this.value
+            console.log(historySearch)
+            showHistory(historySearch)
+          })
 
         $("#history").append(searchItem);
         getUV(cityJSON.coord.lat, cityJSON.coord.lon);
@@ -128,12 +194,15 @@ $("button").click(function () {
       }
     },
   });
-});
+};
 
+// showStorage function
 function showStorage() {
   var historyItem = JSON.parse(
     localStorage.getItem(localStorage.key("userInput"))
-  );
+    );
+    console.log("Test: " + historyItem)
+   
   if (historyItem !== null) {
     for (i = 0; i < historyItem.length; i++) {
       var searchItem = document.createElement("input");
@@ -141,47 +210,22 @@ function showStorage() {
       searchItem.setAttribute("readonly", "true");
       searchItem.setAttribute("class", "form-control d-block searchItem");
       searchItem.setAttribute("id", "searchItem");
-      searchItem.setAttribute("value", historyItem[i]);
+        searchItem.setAttribute("value", historyItem[i]);
+        searchItem.addEventListener("click", function (event) {
+            
+            var historySearch = this.value
+            console.log(historySearch)
+            showHistory(historySearch)
+            
+        })
+        
+
       $("#history").append(searchItem);
     }
   }
 }
 
 showStorage();
-
-$(".searchItem").click(function () {
-  $("p").empty();
-    $("h3").empty();
-    $("span").empty();
-  var historyInput = this.value;
-
-  $.ajax({
-    url:
-      "https://api.openweathermap.org/data/2.5/weather?q=" +
-      historyInput +
-      "&units=imperial&APPID=" +
-      APIKey,
-    method: "GET",
-      success: function (cityJSON) {
-        
-        var getfivedayIcon = cityJSON.weather[0].icon;
-        fivedayIcon =
-              "http://openweathermap.org/img/wn/" + getfivedayIcon + "@2x.png";
-          
-      $("#cityNameDisplay").append(cityJSON.name + " - " + m + "<img src=" + fivedayIcon + ">");
-      $("#temperatureDisplay").append(
-        "Temperature: " + cityJSON.main.temp + " Degrees"
-      );
-      $("#humidityDisplay").append("Humidity: " + cityJSON.main.humidity + "%");
-      $("#windSpeedDisplay").append(
-        "Wind Speed: " + cityJSON.wind.speed + " Miles Per Hour"
-      );
-
-      getUV(cityJSON.coord.lat, cityJSON.coord.lon);
-      fiveDay(cityJSON.coord.lat, cityJSON.coord.lon);
-    },
-  });
-});
 
 function getUV(lat, lon) {
   $.ajax({
