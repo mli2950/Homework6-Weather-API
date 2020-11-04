@@ -23,7 +23,7 @@ I also had to create one more API call for the weather icons, and correctly conc
 The following image shows the web application's appearance and functionality:
 
 ![Home Page](mli2950.github.io_Homework6-Weather-API_.png "Home Page")
-![Result](mli2950.github.io_Homework6-Weather-API_ (1).png "Results")
+![Result](Results.png "Results")
 
 
 
