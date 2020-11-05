@@ -14,17 +14,20 @@
     <title>Michael Li's Weather Dashboard</title>
   </head>
   <body>
+    <!-- Jumbotron/Header -->
     <div class="jumbotron">
       <h1 class="display-4" id="title">Weather Dashboard</h1>
       <hr class="my-4" />
     </div>
-
+    <!-- Container for all weather info -->
     <div class="container shadow-lg">
       <div class="row">
         <div class="col-lg-4">
+          <!-- Aside element for the search button, and search history -->
           <aside>
             <h4>Search:</h4>
             <div class="input-group mb-3">
+              <!-- Input element for users to type in their search -->
               <input
                 type="text"
                 id="cityInput"
@@ -32,12 +35,13 @@
                 placeholder="City Name"
               />
               <div class="input-group-append">
+                <!-- Search Button -->
                 <button class="btn btn-outline-secondary" type="button">
                   Search
                 </button>
               </div>
             </div>
-            <!-- History -->
+            <!-- History form element, this is where stored user searches are appended-->
             <form id="history"></form>
           </aside>
         </div>
