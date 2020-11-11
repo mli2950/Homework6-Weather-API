@@ -90,7 +90,7 @@ enter.addEventListener("keyup", function () {
 });
 
 // When the search button is clicked, run the getweather function
-$("button").click(getWeather())
+$("#button").on("click", getWeather)
 
 // showHistory function
 function showHistory(x) {
